@@ -1,4 +1,4 @@
-Gaia Least Cost Path Plugin
+Gaia Density Computations Plugin
 ================================
 
 This is a plugin for Gaia (https://github.com/OpenDataAnalytics/gaia) that
