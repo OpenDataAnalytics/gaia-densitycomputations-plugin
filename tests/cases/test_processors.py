@@ -23,8 +23,8 @@ import pysal
 import gdal
 import numpy as np
 from gaia import formats
-from gaia.geo.geo_inputs import RasterFileIO
-from gaia_densitycomputations.processes import DensityComputationsProcess
+from gaia.geo.geo_inputs import RasterFileIO, VectorFileIO
+from gaia_densitycomputations.processes import SimpleGridDensityProcess
 
 testfile_path = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../data')
@@ -38,13 +38,15 @@ class TestDensityComputationsProcessors(unittest.TestCase):
         """
 
         uri = os.path.join(testfile_path, 'ports_and_harbours.geojson')
+        points = VectorFileIO(uri)
+
         resolution = {
             'nCol': 200,
             'nRow': 100
         }
 
-        process = DensityComputationsProcess(
-            inputs=[{"uri": uri}], resolution=resolution)
+        process = SimpleGridDensityProcess(
+            inputs=[points], resolution=resolution)
         try:
             process.compute()
             expected_layer = process.output.read()

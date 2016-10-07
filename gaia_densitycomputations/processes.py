@@ -35,30 +35,39 @@ import matplotlib.pyplot as plt
 from math import sqrt, ceil
 
 
-class DensityComputationsProcess(GaiaProcess):
+class SimpleGridDensityProcess(GaiaProcess):
     """
-        Density Computations.
+    Process for calculating the number of points within each grid cell
+    of a specified size.
     """
     default_output = formats.RASTER
 
     def __init__(self, resolution, **kwargs):
-        super(DensityComputationsProcess, self).__init__(**kwargs)
+        """
+        Create an instance of the DensityComputationsProcess class
+        :param resolution: grid cell resolution of the output
+        :param kwargs: Optional keyword arguments
+        """
+        super(SimpleGridDensityProcess, self).__init__(**kwargs)
 
         self.resolution = resolution
 
         if not self.output:
             self.output = RasterFileIO(name='result', uri=self.get_outpath())
-            self.uri = self.inputs[0]['uri']
 
-    def calculateDensity(self):
+    def calculate_density(self):
+        """
+        Calculate a simple estimate of grid density by summing points
+        within each grid cell.
+        """
 
         shpDriver = ogr.GetDriverByName('GeoJSON')
-
-        dataSource = shpDriver.Open(self.uri, 0)
+        strjson = self.inputs[0].read().to_json()
+        dataSource = shpDriver.Open(strjson, 0)
 
         # Open the source file, and exit if doesn't exist
         if dataSource is None:
-            print 'Could not open file ' + self.uri
+            print 'Could not open file ' + self.inputs[0].uri
             sys.exit(1)
 
         if os.path.exists(self.output.uri):
@@ -136,8 +145,11 @@ class DensityComputationsProcess(GaiaProcess):
         outband = None
 
     def compute(self):
-        self.calculateDensity()
+        """
+        Run the process
+        """
+        self.calculate_density()
 
 PLUGIN_CLASS_EXPORTS = [
-    DensityComputationsProcess,
+    SimpleGridDensityProcess,
 ]

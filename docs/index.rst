@@ -2,8 +2,11 @@ Gaia Density Computations Plugin
 ================================
 
 This is a plugin for Gaia (https://github.com/OpenDataAnalytics/gaia) that
-calculates the density computations for a vector layer.
+calculates the point density of a dataset given a raster grid of a specified size (in columns and rows).
+The current implementation performs a simple calculation of adding the number of points within each grid cell.
 
+
+An example of how to use this plugin can be found `here <gaia_processes.html>`__.
 
 Installation
 -----------------
