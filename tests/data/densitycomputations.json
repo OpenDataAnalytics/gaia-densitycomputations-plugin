@@ -1,8 +1,8 @@
 {
-  "_type": "gaia_densitycomputations.processes.DensityComputationsProcess",
+  "_type": "gaia_densitycomputations.processes.SimpleGridDensityProcess",
   "inputs": [
-    {
-      "name": "input",
+     {
+      "_type": "gaia.geo.geo_inputs.VectorFileIO",
       "uri": "tests/data/ports_and_harbours.geojson"
     }
   ],

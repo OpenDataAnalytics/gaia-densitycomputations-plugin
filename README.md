@@ -1,10 +1,15 @@
-## gaia-density-computations4-path-plugin
+## gaia-density-computations-plugin
 
-This is a plugin for Gaia (https://github.com/OpenDataAnalytics/gaia) density computations
+This is a plugin for Gaia (https://github.com/OpenDataAnalytics/gaia) that provides
+a simple estimate of point density by creating a grid of square cells of a specified size
+and then summing the points that lie within each grid.  The result is a raster dataset
+with cell values equaling the number of points within that cell.
 
 #### Documentation
 
 Documentation for this plugin can be found at http://gaia-densitycomputations-plugin.readthedocs.org.
+
+Documentation for this Gaia can be found at http://gaia.readthedocs.org.
 
 #### Installation
 
@@ -12,7 +17,7 @@ Documentation for this plugin can be found at http://gaia-densitycomputations-pl
   - pip install -r requirements.txt
 
 #### Inputs
-  - Vector
+  - A vector dataset of points
 
 #### License
 
