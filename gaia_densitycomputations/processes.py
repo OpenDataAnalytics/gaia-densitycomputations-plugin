@@ -16,6 +16,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 ##############################################################################
+from gaia import types
+
 import gaia.formats as formats
 import gdal
 import os
@@ -40,6 +42,25 @@ class SimpleGridDensityProcess(GaiaProcess):
     Process for calculating the number of points within each grid cell
     of a specified size.
     """
+
+    #: Tuple of required inputs; name, type , max # of each; None = no max
+    required_inputs = [
+        {'description': 'Feature dataset',
+         'type': types.VECTOR,
+         'max': 1
+         }
+    ]
+
+    #: Required arguments, data types as dict
+    required_args = [
+        {
+            'name': 'resolution',
+            'title': 'Output image size',
+            'description': 'Output image size (cols,rows), ex: "200,100"',
+            'type': str
+        }
+    ]
+
     default_output = formats.RASTER
 
     def __init__(self, resolution, **kwargs):
@@ -48,9 +69,8 @@ class SimpleGridDensityProcess(GaiaProcess):
         :param resolution: grid cell resolution of the output
         :param kwargs: Optional keyword arguments
         """
+        self.resolution = [int(n) for n in resolution.split(',')]
         super(SimpleGridDensityProcess, self).__init__(**kwargs)
-
-        self.resolution = resolution
 
         if not self.output:
             self.output = RasterFileIO(name='result', uri=self.get_outpath())
@@ -88,8 +108,8 @@ class SimpleGridDensityProcess(GaiaProcess):
         ymax = extent[3]
 
         # Number of columns and rows
-        nbrColumns = self.resolution['nCol']
-        nbrRows = self.resolution['nRow']
+        nbrColumns = self.resolution[0]
+        nbrRows = self.resolution[1]
 
         # Caculate the cell size in x and y direction
         csx = (xmax - xmin) / nbrColumns
