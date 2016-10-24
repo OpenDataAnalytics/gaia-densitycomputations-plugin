@@ -40,10 +40,7 @@ class TestDensityComputationsProcessors(unittest.TestCase):
         uri = os.path.join(testfile_path, 'ports_and_harbours.geojson')
         points = VectorFileIO(uri)
 
-        resolution = {
-            'nCol': 200,
-            'nRow': 100
-        }
+        resolution = '200,100'
 
         process = SimpleGridDensityProcess(
             inputs=[points], resolution=resolution)
