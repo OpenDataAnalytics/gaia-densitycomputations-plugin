@@ -6,8 +6,5 @@
       "uri": "tests/data/ports_and_harbours.geojson"
     }
   ],
-  "resolution": {
-        "nCol": 200,
-        "nRow": 100
-   }
+  "resolution": "200,100"
 }
