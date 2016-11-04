@@ -30,7 +30,7 @@ class Mock(MagicMock):
 MOCK_MODULES = ['pysal', 'scipy', 'gdal',  'gdalconst', 'osgeo', 'ogr', 'osr',
                 'osgeo.gdal_array', 'numpy', 'pandas', 'geopandas', 'psycopg2',
                 'scikit-image', 'skimage', 'skimage.graph', 'numpy.ma',
-                'matplotlib', 'matplotlib.pyplot']
+                'matplotlib', 'matplotlib.pyplot', 'scipy.stats', 'gdalnumeric']
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 # -- General configuration ------------------------------------------------

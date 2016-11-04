@@ -16,15 +16,14 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 ###############################################################################
-import json
+
 import os
 import unittest
-import pysal
 import gdal
 import numpy as np
-from gaia import formats
-from gaia.geo.geo_inputs import RasterFileIO, VectorFileIO
-from gaia_densitycomputations.processes import SimpleGridDensityProcess
+from gaia.geo.geo_inputs import VectorFileIO
+from gaia_densitycomputations.processes import SimpleGridDensityProcess, \
+    KernelDensityProcess
 
 testfile_path = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../data')
@@ -54,6 +53,35 @@ class TestDensityComputationsProcessors(unittest.TestCase):
             actual_layer = gdal.Open(os.path.join(
                 testfile_path,
                 'densitycomputations_process_results.tif'),
+                gdal.GA_Update)
+            actual_results = actual_layer.GetRasterBand(1).GetStatistics(0, 1)
+
+            expected_results_rounded = np.around(expected_results, decimals=2)
+            actual_results_rounded = np.around(actual_results, decimals=2)
+            self.assertEquals(np.all(expected_results_rounded),
+                              np.all(actual_results_rounded))
+        finally:
+            if process:
+                process.purge()
+
+    def test_process_kerneldensity(self):
+        """
+        Test KernelDensityProcess for raster inputs
+        """
+
+        uri = os.path.join(testfile_path, 'iraq_hospitals.geojson')
+        points = VectorFileIO(uri)
+        process = KernelDensityProcess(inputs=[points])
+        try:
+            process.compute()
+            expected_layer = process.output.read()
+            # Get layer stats
+            expected_results = \
+                expected_layer.GetRasterBand(1).GetStatistics(0, 1)
+
+            actual_layer = gdal.Open(os.path.join(
+                testfile_path,
+                'kerneldensity_process_results.tif'),
                 gdal.GA_Update)
             actual_results = actual_layer.GetRasterBand(1).GetStatistics(0, 1)
 

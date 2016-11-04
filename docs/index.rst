@@ -2,11 +2,37 @@ Gaia Density Computations Plugin
 ================================
 
 This is a plugin for Gaia (https://github.com/OpenDataAnalytics/gaia) that
-calculates the point density of a dataset given a raster grid of a specified size (in columns and rows).
-The current implementation performs a simple calculation of adding the number of points within each grid cell.
+calculates the point density of a dataset given a raster grid of a specified size (in columns and rows),
+using one of the following processes:
 
+    * `SimpleDensityProcess <gaia_densitycomputations.html#gaia_densitycomputations.processes.SimpleGridDensityProcess>`__
 
-An example of how to use this plugin can be found `here <gaia_processes.html>`__.
+      * Calculate point density by adding the number of points within each grid cell.
+
+      * Required input: a vector dataset containing points
+
+      * Optional arguments:
+
+        * width: Width of output image in pixels (default=1024)
+
+      * `Example <gaia_processes.html#Simple-Grid-Density-Process>`__
+
+    * `KernelDensityProcess <gaia.geo.html#gaia.geo.processes_vector.BufferProcess>`__
+
+      * Calculates point density using a Gaussian kernel density function.
+
+      * Required input: a vector dataset containing points
+
+      * Optional arguments:
+
+        * width: Width of output image in pixels (default=1024)
+
+        * weight: Column of vector dataset, with integer values.  Points will be multiplied by this value.
+
+        * bandwidth: The method used to calculate the kernel density estimator bandwidth.  Valid values are 'scott' (default), 'silverman', or a numerical value.
+
+      * `Example <gaia_processes.html#Kernel-Density-Process>`__
+
 
 Installation
 -----------------

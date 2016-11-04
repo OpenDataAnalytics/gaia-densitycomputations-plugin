@@ -1,0 +1,10 @@
+{
+  "_type": "gaia_densitycomputations.processes.KernelDensityProcess",
+  "inputs": [
+     {
+      "_type": "gaia.geo.geo_inputs.VectorFileIO",
+      "uri": "tests/data/iraq_hospitals.geojson"
+    }
+  ],
+  "width": 200
+}
