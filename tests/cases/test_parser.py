@@ -21,9 +21,6 @@ import os
 import gdal
 import unittest
 import numpy as np
-
-import pysal
-
 from gaia import formats
 from gaia.parser import deserialize
 from gaia.core import config

@@ -19,7 +19,6 @@
 import json
 import os
 import unittest
-import pysal
 import gdal
 import numpy as np
 from gaia import formats
